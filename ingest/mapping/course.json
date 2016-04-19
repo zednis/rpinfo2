@@ -72,14 +72,26 @@
       },
       "prerequisites": {
         "properties": {
-          "type": "string",
-          "index": "not_analyzed"
+          "subjectCode": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
         }
       },
       "corequisites": {
         "properties": {
-          "type": "string",
-          "index": "not_analyzed"
+          "subjectCode": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
+        }
+      },
+      "crosslisted": {
+        "properties": {
+          "subjectCode": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
         }
       }
     }

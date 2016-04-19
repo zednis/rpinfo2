@@ -28,6 +28,7 @@
                 {{#if prerequisites}}<div><strong>Prerequisites:</strong> {{#expand prerequisites}}{{subjectCode}}{{/expand}}</div>{{/if}}
                 {{#if corequisites}}<div><strong>Corequisites:</strong> {{#expand corequisites}}{{subjectCode}}{{/expand}}</div>{{{/if}}
                 {{#if creditHours}}<div><strong>Credit Hours:</strong> {{creditHours}}</div>{{/if}}
+                {{#if crosslisted}}<div><strong>Cross Listed:</strong> {{#expand}}{{subjectCode}}{{/expand}}</div>{{/if}}
             </td>
         </tr>
     </script>
