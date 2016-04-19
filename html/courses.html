@@ -21,9 +21,9 @@
             <td>
                 <div>{{subjectCode}}: {{title}}</div>
                 <div><{{description}}</div>
-                {{#if program}}<div><strong>Program:</strong> <a href="{{program.homepage}}" target="_blank">{{program.name}}</a></div>{{/if}}
-                {{#if department}}<div><strong>Department:</strong> <a href="{{department.name}}" target="_blank">{{department.name}}</a></div>{{/if}}
-                {{#if school}}<div><strong>School:</strong> <a href="{{school.name}}" target="_blank">{{school.name}}</a></div>{{/if}}
+                {{#if program}}<div><strong>Program:</strong> {{#if program.homepage}}<a href="{{program.homepage}}" target="_blank">{{/if}}{{program.name}}{{#if program.homepage}}</a>{{/if}}</div>{{/if}}
+                {{#if department}}<div><strong>Department:</strong> {{#if department.homepage}}<a href="{{department.name}}" target="_blank">{{/if}}{{department.name}}{{#if department.homepage}}</a>{{/if}}</div>{{/if}}
+                {{#if school}}<div><strong>School:</strong> {{#if school.homepage}}<a href="{{school.name}}" target="_blank">{{/if}}{{school.name}}{{#if school.homepage}}</a>{{/if}}</div>{{/if}}
                 {{#if whenOffered}}<div><strong>When Offered:</strong> {{whenOffered}}</div>{{/if}}
                 {{#if prerequisites}}<div><strong>Prerequisites:</strong> {{#expand prerequisites}}{{subjectCode}}{{/expand}}</div>{{/if}}
                 {{#if corequisites}}<div><strong>Corequisites:</strong> {{#expand corequisites}}{{subjectCode}}{{/expand}}</div>{{{/if}}
@@ -40,7 +40,7 @@
             for(var i = 0; i < items.length; i++) {
                 out += options.fn(items[i]);
                 if(i < j) {
-                    out += "; ";
+                    out += ", ";
                 }
             }
             return out;
@@ -65,7 +65,9 @@
                 search_url: '//localhost:9200/rpinfo2/course/_search',
                 page_size: 20,
                 sort: [
-                    {"subjectCode" : {"order" : "asc"}}
+                    {"_score" : {"order" : "desc"}},
+                    {"subjectCode" : {"order" : "asc"}},
+                    {"title.exact" : {"order" : "asc"}}
                 ],
                 sharesave_link: false,
                 default_freetext_fuzzify: "*",
