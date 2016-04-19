@@ -1,0 +1,87 @@
+{
+  "course": {
+    "properties": {
+      "title": {
+        "type": "multi_field",
+        "fields": {
+          "title": {
+            "type": "string",
+            "index": "analyzed"
+          },
+          "exact": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
+        }
+      },
+      "description": {
+        "type": "string"
+      },
+      "program": {
+        "properties": {
+          "name": {
+            "type": "multi_field",
+            "fields": {
+              "name": {
+                "type": "string",
+                "index": "analyzed"
+              },
+              "exact": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "homepage": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
+        }
+      },
+      "school": {
+        "properties": {
+          "name": {
+            "type": "multi_field",
+            "fields": {
+              "name": {
+                "type": "string",
+                "index": "analyzed"
+              },
+              "exact": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "homepage": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
+        }
+      },
+      "creditHours": {
+        "type": "integer"
+      },
+      "subjectCode": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "whenOffered": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "prerequisites": {
+        "properties": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
+      },
+      "corequisites": {
+        "properties": {
+          "type": "string",
+          "index": "not_analyzed"
+        }
+      }
+    }
+  }
+}

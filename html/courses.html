@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+
+    <script type="text/javascript" src="facetview2/vendor/jquery/1.7.1/jquery-1.7.1.min.js"></script>
+    <link rel="stylesheet" href="facetview2/vendor/bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="facetview2/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="facetview2/vendor/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.css">
+    <script type="text/javascript" src="facetview2/vendor/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.min.js"></script>
+    <script type="text/javascript" src="facetview2/es.js"></script>
+    <script type="text/javascript" src="facetview2/bootstrap2.facetview.theme.js"></script>
+    <script type="text/javascript" src="facetview2/jquery.facetview2.js"></script>
+    <link rel="stylesheet" href="facetview2/css/facetview.css">
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.1/handlebars.min.js"></script>
+
+    <script id="course-template" type="text/x-handlebars-template">
+        <tr>
+            <td>
+                <div>{{subjectCode}}: {{title}}</div>
+                <div><{{description}}</div>
+                {{#if program}}<div><strong>Program:</strong> <a href="{{program.homepage}}" target="_blank">{{program.name}}</a></div>{{/if}}
+                {{#if department}}<div><strong>Department:</strong> <a href="{{department.name}}" target="_blank">{{department.name}}</a></div>{{/if}}
+                {{#if school}}<div><strong>School:</strong> <a href="{{school.name}}" target="_blank">{{school.name}}</a></div>{{/if}}
+                {{#if whenOffered}}<div><strong>When Offered:</strong> {{whenOffered}}</div>{{/if}}
+                {{#if prerequisites}}<div><strong>Prerequisites:</strong> {{#expand prerequisites}}{{subjectCode}}{{/expand}}</div>{{/if}}
+                {{#if corequisites}}<div><strong>Corequisites:</strong> {{#expand corequisites}}{{subjectCode}}{{/expand}}</div>{{{/if}}
+                {{#if creditHours}}<div><strong>Credit Hours:</strong> {{creditHours}}</div>{{/if}}
+            </td>
+        </tr>
+    </script>
+
+    <script type="text/javascript">
+
+        Handlebars.registerHelper('expand', function(items, options) {
+            var out = "";
+            var j = items.length - 1;
+            for(var i = 0; i < items.length; i++) {
+                out += options.fn(items[i]);
+                if(i < j) {
+                    out += "; ";
+                }
+            }
+            return out;
+        });
+
+        Handlebars.registerHelper('list', function(items, options) {
+            var out = "<ul>";
+            for(var i=0, l=items.length; i<l; i++) {
+                out = out + "<li>" + options.fn(items[i]) + "</li>";
+            }
+            return out + "</ul>";
+        });
+
+        var source = $("#course-template").html();
+        var template = Handlebars.compile(source);
+
+    </script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('.dataset-browser').facetview({
+                search_url: '//localhost:9200/rpinfo2/course/_search',
+                page_size: 20,
+                sort: [
+                    {"subjectCode" : {"order" : "asc"}}
+                ],
+                sharesave_link: false,
+                default_freetext_fuzzify: "*",
+                default_facet_operator: "AND",
+                default_facet_order: "count",
+                default_facet_size: 15,
+                facets: [
+                    {'field': 'program.name.exact', 'display': 'Program'},
+                    {'field': 'department.name.exact', 'display': 'Department'},
+                    {'field': 'school.name.exact', 'display': 'School'},
+                    {'field': 'whenOffered', 'display': 'When Offered'}
+//                        facet "required for degree?"
+                ],
+                render_result_record: function(options, record)
+                {
+                    return template(record).trim();
+                },
+                selected_filters_in_facet: true,
+                show_filter_field : true,
+                show_filter_logic: true,
+                default_facet_open: true,
+                show_short_url: true,
+                current_short_url: true
+            });
+        });
+    </script>
+
+    <style type="text/css">
+
+        #facetview_filters {
+            margin-left: 20px;
+        }
+        #facetview_rightcol {
+            margin-top: 20px;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="course-browser"></div>
+</body>
+</html>
