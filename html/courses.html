@@ -19,21 +19,25 @@
     <script id="course-template" type="text/x-handlebars-template">
         <tr>
             <td>
-                <div>{{subjectCode}}: {{title}}</div>
-                <div><{{description}}</div>
+                <div><img class="badge" src="//dcotest.tw.rpi.edu/badges/badge?title={{prefix}}&text={{code}}&color=5C85D6"/> <strong style="vertical-align: top">{{title}}</strong></div>
+                <div>{{description}}</div>
+                {{#if courseType}}<div><strong>Type:</strong> {{courseType}}</div>{{/if}}
                 {{#if program}}<div><strong>Program:</strong> {{#if program.homepage}}<a href="{{program.homepage}}" target="_blank">{{/if}}{{program.name}}{{#if program.homepage}}</a>{{/if}}</div>{{/if}}
                 {{#if department}}<div><strong>Department:</strong> {{#if department.homepage}}<a href="{{department.name}}" target="_blank">{{/if}}{{department.name}}{{#if department.homepage}}</a>{{/if}}</div>{{/if}}
                 {{#if school}}<div><strong>School:</strong> {{#if school.homepage}}<a href="{{school.name}}" target="_blank">{{/if}}{{school.name}}{{#if school.homepage}}</a>{{/if}}</div>{{/if}}
                 {{#if whenOffered}}<div><strong>When Offered:</strong> {{whenOffered}}</div>{{/if}}
-                {{#if prerequisites}}<div><strong>Prerequisites:</strong> {{#expand prerequisites}}{{subjectCode}}{{/expand}}</div>{{/if}}
-                {{#if corequisites}}<div><strong>Corequisites:</strong> {{#expand corequisites}}{{subjectCode}}{{/expand}}</div>{{{/if}}
+                {{#if prerequisites_corequisites}}<div><strong>Prerequisites/Corequisites:</strong> {{prerequisites_corequisites}}</div>{{/if}}
                 {{#if creditHours}}<div><strong>Credit Hours:</strong> {{creditHours}}</div>{{/if}}
-                {{#if crosslisted}}<div><strong>Cross Listed:</strong> {{#expand}}{{subjectCode}}{{/expand}}</div>{{/if}}
+                {{#if crosslisted}}<div><strong>Cross Listed:</strong> {{crossListed}}</div>{{/if}}
             </td>
         </tr>
     </script>
 
     <script type="text/javascript">
+
+        Handlebars.registerHelper('badge', function(course) {
+            return "//dcotest.tw.rpi.edu/badges/badge?title="+course["prefix"]+"&text="+course["code"]+"&color=5C85D6";
+        });
 
         Handlebars.registerHelper('expand', function(items, options) {
             var out = "";
@@ -62,7 +66,7 @@
 
     <script type="text/javascript">
         jQuery(document).ready(function($) {
-            $('.dataset-browser').facetview({
+            $('.course-browser').facetview({
                 search_url: '//localhost:9200/rpinfo2/course/_search',
                 page_size: 20,
                 sort: [
@@ -76,11 +80,12 @@
                 default_facet_order: "count",
                 default_facet_size: 15,
                 facets: [
-                    {'field': 'program.name.exact', 'display': 'Program'},
+                    {'field': 'courseType.exact', 'display': 'Course Type'},
+//                    {'field': 'program.name.exact', 'display': 'Program'},
                     {'field': 'department.name.exact', 'display': 'Department'},
                     {'field': 'school.name.exact', 'display': 'School'},
-                    {'field': 'whenOffered', 'display': 'When Offered'}
-//                        facet "required for degree?"
+                    {'field': 'whenOffered', 'display': 'When Offered'},
+                    {'field': 'creditHours', 'display': 'Credit Hours'}
                 ],
                 render_result_record: function(options, record)
                 {
