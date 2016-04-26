@@ -16,15 +16,17 @@
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.1/handlebars.min.js"></script>
 
+    <!--<script id="prefixes" type="application/json" src="prefixes.json"></script>-->
+
     <script id="course-template" type="text/x-handlebars-template">
         <tr>
             <td>
-                <div><img class="badge" src="//dcotest.tw.rpi.edu/badges/badge?title={{prefix}}&text={{code}}&color=5C85D6"/> <strong style="vertical-align: top">{{title}}</strong></div>
+                <div><img class="badge" src="//dcotest.tw.rpi.edu/badges/badge?title={{prefix}}&text={{code}}&color=5C85D6"/> <strong style="vertical-align: top">{{title}}</strong>&nbsp;<span style="vertical-align: top" class='label {{courseLabelClass level}}'>{{level}}</span></div>
                 <div>{{description}}</div>
                 {{#if courseType}}<div><strong>Type:</strong> {{courseType}}</div>{{/if}}
                 {{#if program}}<div><strong>Program:</strong> {{#if program.homepage}}<a href="{{program.homepage}}" target="_blank">{{/if}}{{program.name}}{{#if program.homepage}}</a>{{/if}}</div>{{/if}}
-                {{#if department}}<div><strong>Department:</strong> {{#if department.homepage}}<a href="{{department.name}}" target="_blank">{{/if}}{{department.name}}{{#if department.homepage}}</a>{{/if}}</div>{{/if}}
-                {{#if school}}<div><strong>School:</strong> {{#if school.homepage}}<a href="{{school.name}}" target="_blank">{{/if}}{{school.name}}{{#if school.homepage}}</a>{{/if}}</div>{{/if}}
+                {{#if department}}<div><strong>Department:</strong> {{department.name}}</div>{{/if}}
+                {{#if school}}<div><strong>School:</strong> {{school.name}}</div>{{/if}}
                 {{#if whenOffered}}<div><strong>When Offered:</strong> {{whenOffered}}</div>{{/if}}
                 {{#if prerequisites_corequisites}}<div><strong>Prerequisites/Corequisites:</strong> {{prerequisites_corequisites}}</div>{{/if}}
                 {{#if creditHours}}<div><strong>Credit Hours:</strong> {{creditHours}}</div>{{/if}}
@@ -35,9 +37,20 @@
 
     <script type="text/javascript">
 
-        Handlebars.registerHelper('badge', function(course) {
-            return "//dcotest.tw.rpi.edu/badges/badge?title="+course["prefix"]+"&text="+course["code"]+"&color=5C85D6";
+        Handlebars.registerHelper('courseLabelClass', function(level) {
+            switch(level) {
+                case "Graduate":
+                    return "label-info";
+                case "Undergraduate":
+                    return "label-success";
+                default:
+                    return "";
+            }
         });
+
+//        Handlebars.registerHelper('badge', function(course) {
+//            return "//dcotest.tw.rpi.edu/badges/badge?title="+course["prefix"]+"&text="+course["code"]+"&color=5C85D6";
+//        });
 
         Handlebars.registerHelper('expand', function(items, options) {
             var out = "";
@@ -81,6 +94,7 @@
                 default_facet_size: 15,
                 facets: [
                     {'field': 'courseType.exact', 'display': 'Course Type'},
+                    {'field': 'level', 'display': 'Course Level'},
 //                    {'field': 'program.name.exact', 'display': 'Program'},
                     {'field': 'department.name.exact', 'display': 'Department'},
                     {'field': 'school.name.exact', 'display': 'School'},
