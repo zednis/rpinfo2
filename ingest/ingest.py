@@ -1,5 +1,7 @@
 import pandas
 import json
+from bs4 import BeautifulSoup
+import re
 
 courses_csv = "courses-list-2016-04-24_20.25.23.xlsx"
 programs_csv = "programs-list-2016-04-24_20.27.21.xlsx"
@@ -82,6 +84,7 @@ def get_courses():
                 courses.append(course)
 
     # print(when_offered)
+    # print(len(when_offered))
     # print(credit_hours)
     # print(prefixes)
     # print(len(prefixes))
@@ -89,8 +92,55 @@ def get_courses():
     return courses
 
 
+def get_programs():
+    df = pandas.read_excel("resources/" + programs_csv, sheetname='Worksheet')
+
+    programs = []
+    for index, row in df.iterrows():
+        program = {"name": row["Program Name"].strip()}
+
+        if row["Degree Type"] is not pandas.np.nan:
+            program["degree_type"] = row["Degree Type"].strip()
+
+        if row["Program Type"] is not pandas.np.nan:
+            program["program_type"] = row["Program Type"].strip()
+
+        if row["Entity Name"] is not pandas.np.nan:
+            program["department"] = row["Entity Name"].strip()
+
+        if row["Cores"] is not pandas.np.nan:
+            cores = get_program_core_courses(row["Cores"].strip())
+            program["core_courses"] = list(cores)
+
+        programs.append(program)
+
+    return programs
+
+
+def get_program_core_courses(html):
+    core_courses = set()
+    soup = BeautifulSoup(html, 'html.parser')
+    pattern = re.compile("[A-Z]{4}\s[0-9]{4}")
+
+    for line_item in soup.find_all('li'):
+        text = line_item.text
+        for match in pattern.findall(text):
+            core_courses.add(match)
+
+    return core_courses
+
+
 def main():
     courses = get_courses()
+    programs = get_programs()
+
+    for program in programs:
+        for core_course in program["core_courses"]:
+            matches = [_course for _course in courses if _course["subjectCode"] == core_course]
+            for course in matches:
+                if "core_for" not in course:
+                    course["core_for"] = []
+                course["core_for"].append(program)
 
     data = []
     for course in courses:
@@ -101,6 +151,8 @@ def main():
     with open("out.bulk", "w") as bulk_file:
         bulk_file.write('\n'.join(data)+'\n')
 
+    # print(json.dumps(get_programs()))
+    # print(get_program_core_courses(open("resources/CompSciCores.html")))
 
 if __name__ == "__main__":
     main()

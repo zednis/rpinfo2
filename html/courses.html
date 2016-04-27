@@ -31,6 +31,7 @@
                 {{#if prerequisites_corequisites}}<div><strong>Prerequisites/Corequisites:</strong> {{prerequisites_corequisites}}</div>{{/if}}
                 {{#if creditHours}}<div><strong>Credit Hours:</strong> {{creditHours}}</div>{{/if}}
                 {{#if crosslisted}}<div><strong>Cross Listed:</strong> {{crossListed}}</div>{{/if}}
+                {{#if core_for}}<div><strong>Core for Programs:</strong>{{#list core_for}}{{name}}{{/list}}</div>{{/if}}
             </td>
         </tr>
     </script>
@@ -95,7 +96,7 @@
                 facets: [
                     {'field': 'courseType.exact', 'display': 'Course Type'},
                     {'field': 'level', 'display': 'Course Level'},
-//                    {'field': 'program.name.exact', 'display': 'Program'},
+                    {'field': 'core_for.name.exact', 'display': 'Core for Program'},
                     {'field': 'department.name.exact', 'display': 'Department'},
                     {'field': 'school.name.exact', 'display': 'School'},
                     {'field': 'whenOffered', 'display': 'When Offered'},
