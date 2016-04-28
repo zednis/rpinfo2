@@ -16,22 +16,19 @@
 
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.1/handlebars.min.js"></script>
 
-    <!--<script id="prefixes" type="application/json" src="prefixes.json"></script>-->
-
     <script id="course-template" type="text/x-handlebars-template">
         <tr>
             <td>
-                <div><img class="badge" src="//dcotest.tw.rpi.edu/badges/badge?title={{prefix}}&text={{code}}&color=5C85D6"/> <strong style="vertical-align: top">{{title}}</strong>&nbsp;<span style="vertical-align: top" class='label {{courseLabelClass level}}'>{{level}}</span></div>
+                <div><img class="badge" src="//dcotest.tw.rpi.edu/badges/badge?title={{prefix}}&text={{code}}&color={{badgeColor prefix}}"/> <strong style="vertical-align: top">{{title}}</strong>&nbsp;<span style="vertical-align: top" class='label {{courseLabelClass level}}'>{{level}}</span></div>
                 <div>{{description}}</div>
                 {{#if courseType}}<div><strong>Type:</strong> {{courseType}}</div>{{/if}}
-                {{#if program}}<div><strong>Program:</strong> {{#if program.homepage}}<a href="{{program.homepage}}" target="_blank">{{/if}}{{program.name}}{{#if program.homepage}}</a>{{/if}}</div>{{/if}}
-                {{#if department}}<div><strong>Department:</strong> {{department.name}}</div>{{/if}}
-                {{#if school}}<div><strong>School:</strong> {{school.name}}</div>{{/if}}
+                {{#if department}}<div><strong>Department:</strong> <a href="#" target="_blank">{{department.name}}</a></div>{{/if}}
+                {{#if school}}<div><strong>School:</strong> <a href="#" target="_blank">{{school.name}}</a></div>{{/if}}
                 {{#if whenOffered}}<div><strong>When Offered:</strong> {{whenOffered}}</div>{{/if}}
                 {{#if prerequisites_corequisites}}<div><strong>Prerequisites/Corequisites:</strong> {{prerequisites_corequisites}}</div>{{/if}}
                 {{#if creditHours}}<div><strong>Credit Hours:</strong> {{creditHours}}</div>{{/if}}
                 {{#if crosslisted}}<div><strong>Cross Listed:</strong> {{crossListed}}</div>{{/if}}
-                {{#if core_for}}<div><strong>Core for Programs:</strong>{{#list core_for}}{{name}}{{/list}}</div>{{/if}}
+                {{#if core_for}}<div><strong>Core for Programs:</strong>{{#list core_for}}<a href="#" target="_blank">{{name}}</a>{{/list}}</div>{{/if}}
             </td>
         </tr>
     </script>
@@ -49,9 +46,14 @@
             }
         });
 
-//        Handlebars.registerHelper('badge', function(course) {
-//            return "//dcotest.tw.rpi.edu/badges/badge?title="+course["prefix"]+"&text="+course["code"]+"&color=5C85D6";
-//        });
+        Handlebars.registerHelper('badgeColor', function(prefix) {
+            var hit = $.grep(prefixes, function (e) { return e["prefix"] === prefix; });
+            if(hit != null && "color" in hit[0]) {
+                return hit[0]["color"];
+            } else {
+                return "5C85D6";
+            }
+        });
 
         Handlebars.registerHelper('expand', function(items, options) {
             var out = "";
@@ -71,6 +73,11 @@
                 out = out + "<li>" + options.fn(items[i]) + "</li>";
             }
             return out + "</ul>";
+        });
+
+        var prefixes = null;
+        $.getJSON('prefixes.json', function (data) {
+            prefixes = data;
         });
 
         var source = $("#course-template").html();

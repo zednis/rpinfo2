@@ -1,0 +1,217 @@
+[
+  {
+    "prefix": "ITWS",
+    "color": "5C85D6",
+    "homepage": "http://www.it.rpi.edu/"
+  },
+  {
+    "prefix": "USAR",
+    "color": "b81d0b",
+    "homepage": ""
+  },
+  {
+    "prefix": "ENGR",
+    "color": "0c9b7a",
+    "homepage": ""
+  },
+  {
+    "prefix": "STSS",
+    "color": "00d00c",
+    "homepage": ""
+  },
+  {
+    "prefix": "USNA",
+    "color": "9ba31c",
+    "homepage": ""
+  },
+  {
+    "prefix": "ECSE",
+    "color": "0fc712",
+    "homepage": ""
+  },
+  {
+    "prefix": "STSH",
+    "color": "e417d7",
+    "homepage": ""
+  },
+  {
+    "prefix": "ARCH",
+    "color": "e356f6",
+    "homepage": ""
+  },
+  {
+    "prefix": "LGHT",
+    "color": "788e9e",
+    "homepage": ""
+  },
+  {
+    "prefix": "MATH",
+    "color": "f56a13",
+    "homepage": ""
+  },
+  {
+    "prefix": "NSST",
+    "color": "ef1f07",
+    "homepage": ""
+  },
+  {
+    "prefix": "ARTS",
+    "color": "205901",
+    "homepage": ""
+  },
+  {
+    "prefix": "MTLE",
+    "color": "f53aef",
+    "homepage": ""
+  },
+  {
+    "prefix": "ISCI",
+    "color": "db77ee",
+    "homepage": ""
+  },
+  {
+    "prefix": "PHYS",
+    "color": "823cd1",
+    "homepage": ""
+  },
+  {
+    "prefix": "DSES",
+    "color": "18d883",
+    "homepage": ""
+  },
+  {
+    "prefix": "CISH",
+    "color": "53ea1a",
+    "homepage": ""
+  },
+  {
+    "prefix": "IENV",
+    "color": "21fad5",
+    "homepage": ""
+  },
+  {
+    "prefix": "CHEM",
+    "color": "9ad4ab",
+    "homepage": ""
+  },
+  {
+    "prefix": "IHSS",
+    "color": "8adaf0",
+    "homepage": ""
+  },
+  {
+    "prefix": "USAF",
+    "color": "900696",
+    "homepage": ""
+  },
+  {
+    "prefix": "WRIT",
+    "color": "0d16a2",
+    "homepage": ""
+  },
+  {
+    "prefix": "MGMT",
+    "color": "cf8065",
+    "homepage": ""
+  },
+  {
+    "prefix": "MATP",
+    "color": "b6cf0d",
+    "homepage": ""
+  },
+  {
+    "prefix": "ERTH",
+    "color": "4d72eb",
+    "homepage": ""
+  },
+  {
+    "prefix": "ENVE",
+    "color": "46f858",
+    "homepage": ""
+  },
+  {
+    "prefix": "CHME",
+    "color": "42080c",
+    "homepage": ""
+  },
+  {
+    "prefix": "COGS",
+    "color": "f42dac",
+    "homepage": ""
+  },
+  {
+    "prefix": "MANE",
+    "color": "458cee",
+    "homepage": ""
+  },
+  {
+    "prefix": "BCBP",
+    "color": "ef90ee",
+    "homepage": ""
+  },
+  {
+    "prefix": "ESCI",
+    "color": "d705ba",
+    "homepage": ""
+  },
+  {
+    "prefix": "ASTR",
+    "color": "9b4381",
+    "homepage": ""
+  },
+  {
+    "prefix": "BMED",
+    "color": "918f21",
+    "homepage": ""
+  },
+  {
+    "prefix": "CSCI",
+    "color": "9093f1",
+    "homepage": "http://cs.rpi.edu/"
+  },
+  {
+    "prefix": "COMM",
+    "color": "952fdf",
+    "homepage": ""
+  },
+  {
+    "prefix": "PSYC",
+    "color": "3adadf",
+    "homepage": ""
+  },
+  {
+    "prefix": "PHIL",
+    "color": "43d64f",
+    "homepage": ""
+  },
+  {
+    "prefix": "LITR",
+    "color": "a96164",
+    "homepage": ""
+  },
+  {
+    "prefix": "BIOL",
+    "color": "3ec6fd",
+    "homepage": ""
+  },
+  {
+    "prefix": "CIVL",
+    "color": "b1693a",
+    "homepage": ""
+  },
+  {
+    "prefix": "ECON",
+    "color": "d3d46b",
+    "homepage": ""
+  },
+  {
+    "prefix": "ISYE",
+    "color": "3b0523",
+    "homepage": ""
+  },
+  {
+    "prefix": "LANG",
+    "color": "b9f102",
+    "homepage": ""
+  }
+]
